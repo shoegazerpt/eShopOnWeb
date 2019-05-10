@@ -463,6 +463,14 @@ namespace Microsoft.eShopWeb.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ExternalCall()
+        {
+            var client = new System.Net.Http.HttpClient();
+            var response = await client.GetAsync("http://rifiel-eshopweb.westeurope.cloudapp.azure.com/api/values");
+            return View();
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
