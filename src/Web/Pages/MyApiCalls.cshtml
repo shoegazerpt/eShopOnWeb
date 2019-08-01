@@ -1,0 +1,41 @@
+﻿@page
+@model Microsoft.eShopWeb.Web.Pages.MyApiCallsModel
+@{
+    Layout = null;
+}
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MyApiCalls</title>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+
+</head>
+<body>
+    My Api Calls
+    <button id="btnGetProducts">Get Products</button>
+    <span id="txtItemCount"></span>
+    <span>OperationId=@System.Diagnostics.Activity.Current.Id</span>
+    <environment names="Development">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="/js/site.js" asp-append-version="true"></script>
+    </environment>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnGetProducts').click(() => {
+                $.get('/api/catalog/list', (data) => {
+                    console.log(data);
+                    alert(data.catalogItems.length + ' items');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
